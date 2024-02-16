@@ -35,4 +35,10 @@ using Test
 
   # δ isn't exported...
   @test CartesianDomainUtils.δ(1, CartesianIndex((4, 5, 6))) == CartesianIndex((1, 0, 0))
+
+  nhalo = 2
+  halo, edge = get_haloedge_regions(domain, 1, nhalo)
+
+  @test halo == (lo=CartesianIndices((1:2, 6:6)), hi=CartesianIndices((9:10, 6:6)))
+  @test edge == (lo=CartesianIndices((3:4, 6:6)), hi=CartesianIndices((7:8, 6:6)))
 end
