@@ -21,22 +21,7 @@ julia> halo, edge = haloedge_regions(full, 1, 2)
 ```
 """
 function haloedge_regions(domain::CartesianIndices{N}, axis::Int, nhalo::Int) where {N}
-
-  # Shrink by nhalo along all axes to get the 
-  # non-halo region in the "center" of the domain
-  inner_domain = expand(domain, -nhalo)
-
-  # edge regions
-  edge_lo = extract_from_lower(inner_domain, axis, nhalo)
-  edge_hi = extract_from_upper(inner_domain, axis, nhalo)
-
-  halo_lo = shift(edge_lo, axis, -nhalo)
-  halo_hi = shift(edge_hi, axis, +nhalo)
-
-  return (
-    halo=(lo=halo_lo, hi=halo_hi), #
-    edge=(lo=edge_lo, hi=edge_hi), #
-  )
+  haloedge_regions(domain, axis, nhalo, nhalo)
 end
 
 """
@@ -67,6 +52,19 @@ julia> halo, edge = haloedge_regions(full, 1, 2, 1) # this uses a halo region of
 function haloedge_regions(
   domain::CartesianIndices{N}, axis::Int, nhalo::Int, nedge::Int
 ) where {N}
+  halo_lo, edge_lo = lower_haloedge_regions(domain, axis, nhalo, nedge)
+  halo_hi, edge_hi = upper_haloedge_regions(domain, axis, nhalo, nedge)
+
+  return (
+    halo=(lo=halo_lo, hi=halo_hi), #
+    edge=(lo=edge_lo, hi=edge_hi), #
+  )
+end
+
+function lower_haloedge_regions(
+  domain::CartesianIndices{N}, axis::Int, nhalo::Int, nedge::Int
+) where {N}
+  @assert nedge <= nhalo "The size of the edge region must be <= than the halo region"
 
   # Shrink by nhalo along all axes to get the 
   # non-halo region in the "center" of the domain
@@ -74,16 +72,29 @@ function haloedge_regions(
 
   # edge regions
   _edge_lo = extract_from_lower(inner_domain, axis, nhalo)
-  _edge_hi = extract_from_upper(inner_domain, axis, nhalo)
 
   halo_lo = shift(_edge_lo, axis, -nhalo)
-  halo_hi = shift(_edge_hi, axis, +nhalo)
 
   edge_lo = extract_from_lower(_edge_lo, axis, nedge)
+
+  return (halo=halo_lo, edge=edge_lo)
+end
+
+function upper_haloedge_regions(
+  domain::CartesianIndices{N}, axis::Int, nhalo::Int, nedge::Int
+) where {N}
+  @assert nedge <= nhalo "The size of the edge region must be <= than the halo region"
+
+  # Shrink by nhalo along all axes to get the 
+  # non-halo region in the "center" of the domain
+  inner_domain = expand(domain, -nhalo)
+
+  # edge regions
+  _edge_hi = extract_from_upper(inner_domain, axis, nhalo)
+
+  halo_hi = shift(_edge_hi, axis, +nhalo)
+
   edge_hi = extract_from_upper(_edge_hi, axis, nedge)
 
-  return (
-    halo=(lo=halo_lo, hi=halo_hi), #
-    edge=(lo=edge_lo, hi=edge_hi), #
-  )
+  return (halo=halo_hi, edge=edge_hi)
 end

@@ -4,7 +4,7 @@ export shift, expand, extract_from_lower, extract_from_upper
 export expand_lower, expand_upper
 export lower_boundary_indices, upper_boundary_indices
 
-export haloedge_regions
+export haloedge_regions, upper_haloedge_regions, lower_haloedge_regions
 
 """
   Apply a delta function to the cartesian index on a specified axis. For
