@@ -1,4 +1,4 @@
-name = "CartesianDomainUtils"
+name = "CartesianDomains"
 uuid = "31d3d393-e656-4614-8ab7-f376885a6db2"
 authors = ["Sam Miller <smil@lle.rochester.edu> and contributors"]
 version = "0.1.0"

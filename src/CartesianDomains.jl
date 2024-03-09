@@ -1,4 +1,4 @@
-module CartesianDomainUtils
+module CartesianDomains
 
 export shift, expand, extract_from_lower, extract_from_upper
 export expand_lower, expand_upper

@@ -1,7 +1,7 @@
-using CartesianDomainUtils
+using CartesianDomais
 using Test
 
-@testset "CartesianDomainUtils.jl" begin
+@testset "CartesianDomains.jl" begin
   domain = CartesianIndices((1:10, 4:8))
 
   @test lower_boundary_indices(domain, 1, +1) == CartesianIndices((2:2, 4:8))
