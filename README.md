@@ -1,9 +1,9 @@
-# CartesianDomainUtils
+# CartesianDomains
 
-[![Build Status](https://github.com/smillerc/CartesianDomainUtils.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/smillerc/CartesianDomainUtils.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![Build Status](https://github.com/smillerc/CartesianDomains.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/smillerc/CartesianDomains.jl/actions/workflows/CI.yml?query=branch%3Amain)
 
 
-`CartesianDomainUtils.jl` is a lightweight library used to work with Cartesian domains and provide conveinent indexing functions. This arose from a need to write dimension-agnostic code for stencil-like operations and halo-aware domains.
+`CartesianDomains.jl` is a lightweight library used to work with Cartesian domains and provide conveinent indexing functions. This arose from a need to write dimension-agnostic code for stencil-like operations and halo-aware domains.
 
 The currently exported functions include:
  - `shift`: Shift a `CartesianIndex` by `n` along a given axis. This is useful for getting indices like `[i+1,j,k]` but in a dimension agnostic manner
