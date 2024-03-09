@@ -1,4 +1,4 @@
-using CartesianDomais
+using CartesianDomains
 using Test
 
 @testset "CartesianDomains.jl" begin
@@ -34,7 +34,7 @@ using Test
   #     CartesianIndices((4:4, 4:5, 6:6))
 
   # δ isn't exported...
-  @test CartesianDomainUtils.δ(1, CartesianIndex((4, 5, 6))) == CartesianIndex((1, 0, 0))
+  @test CartesianDomains.δ(1, CartesianIndex((4, 5, 6))) == CartesianIndex((1, 0, 0))
 
   nhalo = 2
   halo, edge = haloedge_regions(domain, 1, nhalo)
