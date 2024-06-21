@@ -3,6 +3,7 @@ module CartesianDomains
 export shift, expand, extract_from_lower, extract_from_upper
 export expand_lower, expand_upper
 export lower_boundary_indices, upper_boundary_indices
+export tile
 
 export haloedge_regions, upper_haloedge_regions, lower_haloedge_regions
 
@@ -16,6 +17,7 @@ include("expand.jl")
 include("boundary.jl")
 include("shift.jl")
 include("halo.jl")
+include("tile.jl")
 
 # """
 # Get indices of of `±n` for an arbitary `axis`. For a 2d index, and
