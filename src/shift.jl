@@ -1,4 +1,6 @@
 """
+    shift(I::CartesianIndex, axis::Int, n::Int)
+
 Shift a single `CartesianIndex` by `n` on a given `axis`
 """
 function shift(I::CartesianIndex{N}, axis::Int, n::Int) where {N}
@@ -6,6 +8,8 @@ function shift(I::CartesianIndex{N}, axis::Int, n::Int) where {N}
 end
 
 """
+    shift(domain::CartesianIndices, axis::Int, n::Int)
+  
 Shift a `CartesianIndices` domain by `n` on a given `axis`
 """
 function shift(domain::CartesianIndices{N}, axis::Int, n::Int) where {N}
@@ -16,4 +20,3 @@ function shift(domain::CartesianIndices{N}, axis::Int, n::Int) where {N}
 
   return CartesianIndices(idx)
 end
-
