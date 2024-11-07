@@ -6,6 +6,8 @@ export lower_boundary_indices, upper_boundary_indices
 export tile
 
 export haloedge_regions, upper_haloedge_regions, lower_haloedge_regions
+export upper_edge_regions, lower_edge_regions
+export edge_regions
 
 """
   Apply a delta function to the cartesian index on a specified axis. For
