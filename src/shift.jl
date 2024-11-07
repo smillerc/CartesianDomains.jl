@@ -20,3 +20,15 @@ function shift(domain::CartesianIndices{N}, axis::Int, n::Int) where {N}
 
   return CartesianIndices(idx)
 end
+
+function shift(
+  domain::CartesianIndices{N}, axes::NTuple{N2,Int}, n::NTuple{N2,Int}
+) where {N,N2}
+
+  #
+  for (axis, nshift) in zip(axes, n)
+    domain = shift(domain, axis, nshift)
+  end
+
+  return domain
+end
