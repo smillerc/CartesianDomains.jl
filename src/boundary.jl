@@ -1,5 +1,7 @@
 
 """
+    extract_from_lower(domain::CartesianIndices{N}, axis::Int, n::Int) where {N}
+
 Extract a subdomain from the lower boundary of `domain` along `axis` with a width of `n` (along `axis`)
 """
 function extract_from_lower(domain::CartesianIndices{N}, axis::Int, n::Int) where {N}
@@ -11,6 +13,8 @@ function extract_from_lower(domain::CartesianIndices{N}, axis::Int, n::Int) wher
 end
 
 """
+    extract_from_upper(domain::CartesianIndices{N}, axis::Int, n::Int) where {N}
+
 Extract a subdomain from the upper boundary of `domain` along `axis` with a width of `n` (along `axis`)
 """
 function extract_from_upper(domain::CartesianIndices{N}, axis::Int, n::Int) where {N}
@@ -22,6 +26,8 @@ function extract_from_upper(domain::CartesianIndices{N}, axis::Int, n::Int) wher
 end
 
 """
+    lower_boundary_indices(domain::CartesianIndices{N}, axis::Int, n::Int) where {N}
+
 Take a given CartesianIndices and extract only the lower boundary indices at
 an offset of `n` along a given `axis`.
 
@@ -44,6 +50,8 @@ function lower_boundary_indices(domain::CartesianIndices{N}, axis::Int, n::Int) 
 end
 
 """
+    upper_boundary_indices(domain::CartesianIndices{N}, axis::Int, n::Int) where {N}
+
 Take a given CartesianIndices and extract only the upper boundary indices at
 an offset of `n` along a given `axis`.
 
