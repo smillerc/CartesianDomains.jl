@@ -1,4 +1,32 @@
 """
+    shift(I::CartesianIndex, n::Int)
+
+Shift a `CartesianIndex` by `n` on all axes
+"""
+function shift(I::CartesianIndex{N}, n::Int) where {N}
+  I_shifted = I
+  for axis in 1:N
+    I_shifted = shift(I_shifted, axis, n)
+  end
+
+  return I_shifted
+end
+
+"""
+    shift(I::CartesianIndex, n::Int)
+
+Shift a `CartesianIndex` by `n` on all axes
+"""
+function shift(domain::CartesianIndices{N}, n::Int) where {N}
+  shifted_domain = domain
+  for axis in 1:N
+    shifted_domain = shift(shifted_domain, axis, n)
+  end
+
+  return shifted_domain
+end
+
+"""
     shift(I::CartesianIndex, axis::Int, n::Int)
 
 Shift a single `CartesianIndex` by `n` on a given `axis`

@@ -22,16 +22,10 @@ using Test
   @test expand_upper(domain, 2) == CartesianIndices((1:12, 4:10))
 
   @test shift(CartesianIndex((4, 5, 6)), 3, +2) == CartesianIndex(4, 5, 8)
+  @test shift(CartesianIndex((4, 5, 6)), +1) == CartesianIndex(5, 6, 7)
   @test shift(CartesianIndex((4, 5, 6)), 1, -2) == CartesianIndex(2, 5, 6)
   @test shift(CartesianIndex((4, 5, 6)), 0, +2) == CartesianIndex(4, 5, 6)
-
-  #   @test plus_minus(CartesianIndex((4, 5, 6)), 2, 2) == CartesianIndices((4:4, 3:7, 6:6))
-
-  #   # non-uni form +/-: -1:+2
-  #   @test plus_minus(CartesianIndex((4, 5, 6)), 2, (1, 2)) ==
-  #     CartesianIndices((4:4, 4:7, 6:6))
-  #   @test plus_minus(CartesianIndex((4, 5, 6)), 2, (1, 0)) ==
-  #     CartesianIndices((4:4, 4:5, 6:6))
+  @test shift(CartesianIndices((4, 5, 6)), +1) == CartesianIndices((2:5, 2:6, 2:7))
 
   # δ isn't exported...
   @test CartesianDomains.δ(1, CartesianIndex((4, 5, 6))) == CartesianIndex((1, 0, 0))
