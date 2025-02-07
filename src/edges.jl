@@ -3,6 +3,10 @@ function extract_edge_regions(
 ) where {N}
   edges = ntuple(axis -> edge_regions(full_domain, axis, nhalo, width), N)
 
+  inner_domain = expand(full_domain, -nhalo)
+  if any(size(inner_domain) .<= 2width)
+    @warn "The inner domain is not large enough (size is $(size(inner_domain))) to allow for edge domains with width $width to be extracted"
+  end
   # each edge domain extends from lo:hi, but they need to be trimmed so that
   # there isn't overlap
 
@@ -29,5 +33,16 @@ function extract_edge_regions(
     pop!(axes_to_trim) # remove an axis to trim along each time
   end
 
-  return (lo_edges..., hi_edges...)
+  edge_domains = (lo_edges..., hi_edges...)
+
+  # Make sure the edge domains are valid
+  for ed in edge_domains
+    if !all(size(ed) .> 0)
+      error(
+        "One or more of the edge domains has a dimension size of 0:\n$edge_domains\nThis is likely caused by a small inner domain.\n",
+      )
+    end
+  end
+
+  return edge_domains
 end
