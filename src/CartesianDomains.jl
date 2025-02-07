@@ -20,6 +20,7 @@ include("boundary.jl")
 include("shift.jl")
 include("halo.jl")
 include("tile.jl")
+include("edges.jl")
 
 # """
 # Get indices of of `±n` for an arbitary `axis`. For a 2d index, and

@@ -35,4 +35,54 @@ using Test
 
   @test halo == (lo=CartesianIndices((1:2, 6:6)), hi=CartesianIndices((9:10, 6:6)))
   @test edge == (lo=CartesianIndices((3:4, 6:6)), hi=CartesianIndices((7:8, 6:6)))
+
+  nhalo = 2
+  edge_width = 2
+  full = CartesianIndices((10, 20, 30))
+  edge_domains = CartesianDomains.extract_edge_regions(full, nhalo, edge_width)
+
+  @test edge_domains == (
+    CartesianIndices((3:4, 5:16, 5:26)),
+    CartesianIndices((3:8, 3:4, 5:26)),
+    CartesianIndices((3:8, 3:18, 3:4)),
+    CartesianIndices((7:8, 5:16, 5:26)),
+    CartesianIndices((3:8, 17:18, 5:26)),
+    CartesianIndices((3:8, 3:18, 27:28)),
+  )
+
+  # data = zeros(Int, size(full))
+  # for (i, subdomain) in enumerate(edge_domains)
+  #   data[subdomain] .= i
+  # end
+
+  # x, y, z = 0:10, 1:6, 2:0.1:3
+
+  # nodes = expand_upper(full, 1)
+  # x, y, z = nodes.indices
+  # vtk_grid("3d_fields", x, y, z) do vtk
+  #   vtk["data", VTKCellData()] = data
+  # end
+
+  full = CartesianIndices((10, 20))
+
+  edge_domains = CartesianDomains.extract_edge_regions(full, nhalo, edge_width)
+
+  @test edge_domains == (
+    CartesianIndices((3:4, 5:16)),
+    CartesianIndices((3:8, 3:4)),
+    CartesianIndices((7:8, 5:16)),
+    CartesianIndices((3:8, 17:18)),
+  )
+  # data = zeros(Int, size(full))
+  # for (i, subdomain) in enumerate(edge_domains)
+  #   data[subdomain] .= i
+  # end
+
+  # x, y = 0:10, 1:6
+
+  # nodes = expand_upper(full, 1)
+  # x, y = nodes.indices
+  # vtk_grid("2d_fields", x, y) do vtk
+  #   vtk["data", VTKCellData()] = data
+  # end
 end
