@@ -5,7 +5,9 @@ function extract_edge_regions(
 
   inner_domain = expand(full_domain, -nhalo)
   if any(size(inner_domain) .<= 2width)
-    @warn "The inner domain is not large enough (size is $(size(inner_domain))) to allow for edge domains with width $width to be extracted"
+    @warn(
+      "The inner domain is not large enough (size is $(size(inner_domain))) to allow for edge domains with width $width to be extracted",
+    )
   end
   # each edge domain extends from lo:hi, but they need to be trimmed so that
   # there isn't overlap
@@ -33,7 +35,9 @@ function extract_edge_regions(
     pop!(axes_to_trim) # remove an axis to trim along each time
   end
 
-  edge_domains = (lo_edges..., hi_edges...)
+  edge_domains = Vector{eltype(lo_edges)}(undef, 0)
+  push!(edge_domains, lo_edges...)
+  push!(edge_domains, hi_edges...)
 
   # Make sure the edge domains are valid
   for ed in edge_domains

@@ -1,5 +1,6 @@
 using CartesianDomains
 using Test
+using BenchmarkTools
 
 @testset "CartesianDomains.jl" begin
   domain = CartesianIndices((1:10, 4:8))
@@ -21,6 +22,18 @@ using Test
   @test expand_lower(domain, 2) == CartesianIndices((-1:10, 2:8))
   @test expand_upper(domain, 2) == CartesianIndices((1:12, 4:10))
 
+  b1 = @benchmark shift(CartesianIndex((4, 5, 6)), 3, +2)
+  @test b1.allocs == 0
+
+  b2 = @benchmark expand($domain, 2)
+  @test b2.allocs == 0
+
+  b3 = @benchmark lower_boundary_indices($domain, 1, +1)
+  @test b3.allocs == 0
+
+  b4 = @benchmark upper_boundary_indices($domain, 1, +1)
+  @test b3.allocs == 0
+
   @test shift(CartesianIndex((4, 5, 6)), 3, +2) == CartesianIndex(4, 5, 8)
   @test shift(CartesianIndex((4, 5, 6)), +1) == CartesianIndex(5, 6, 7)
   @test shift(CartesianIndex((4, 5, 6)), 1, -2) == CartesianIndex(2, 5, 6)
@@ -39,16 +52,16 @@ using Test
   nhalo = 2
   edge_width = 2
   full = CartesianIndices((10, 20, 30))
-  edge_domains = CartesianDomains.extract_edge_regions(full, nhalo, edge_width)
+  edge_domains = extract_edge_regions(full, nhalo, edge_width)
 
-  @test edge_domains == (
+  @test edge_domains == [
     CartesianIndices((3:4, 5:16, 5:26)),
     CartesianIndices((3:8, 3:4, 5:26)),
     CartesianIndices((3:8, 3:18, 3:4)),
     CartesianIndices((7:8, 5:16, 5:26)),
     CartesianIndices((3:8, 17:18, 5:26)),
     CartesianIndices((3:8, 3:18, 27:28)),
-  )
+  ]
 
   # data = zeros(Int, size(full))
   # for (i, subdomain) in enumerate(edge_domains)
@@ -65,14 +78,14 @@ using Test
 
   full = CartesianIndices((10, 20))
 
-  edge_domains = CartesianDomains.extract_edge_regions(full, nhalo, edge_width)
+  edge_domains = extract_edge_regions(full, nhalo, edge_width)
 
-  @test edge_domains == (
+  @test edge_domains == [
     CartesianIndices((3:4, 5:16)),
     CartesianIndices((3:8, 3:4)),
     CartesianIndices((7:8, 5:16)),
     CartesianIndices((3:8, 17:18)),
-  )
+  ]
   # data = zeros(Int, size(full))
   # for (i, subdomain) in enumerate(edge_domains)
   #   data[subdomain] .= i

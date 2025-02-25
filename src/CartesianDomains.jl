@@ -3,6 +3,7 @@ module CartesianDomains
 export shift, expand, extract_from_lower, extract_from_upper
 export expand_lower, expand_upper
 export lower_boundary_indices, upper_boundary_indices
+export extract_edge_regions
 export tile
 
 export haloedge_regions, upper_haloedge_regions, lower_haloedge_regions

@@ -17,9 +17,9 @@ end
 
 Shift a `CartesianIndex` by `n` on all axes
 """
-function shift(domain::CartesianIndices{N}, n::Int) where {N}
+function shift(domain::CartesianIndices, n::Int)
   shifted_domain = domain
-  for axis in 1:N
+  for axis in 1:length(axes(domain))
     shifted_domain = shift(shifted_domain, axis, n)
   end
 
@@ -41,10 +41,11 @@ end
 Shift a `CartesianIndices` domain by `n` on a given `axis`
 """
 function shift(domain::CartesianIndices{N}, axis::Int, n::Int) where {N}
-  lo = first(domain.indices[axis]) + n
-  hi = last(domain.indices[axis]) + n
+  dom = _promote(domain)
+  lo = first(dom.indices[axis]) + n
+  hi = last(dom.indices[axis]) + n
 
-  idx = ntuple(j -> j == axis ? UnitRange(lo, hi) : domain.indices[j], N)
+  idx = ntuple(j -> j == axis ? UnitRange(lo, hi) : dom.indices[j], N)
 
   return CartesianIndices(idx)
 end
@@ -66,3 +67,9 @@ function shift(
 
   return domain
 end
+
+function _promote(CI::CartesianIndices{N,NTuple{N,Base.OneTo{Int}}}) where {N}
+  return CartesianIndices(ntuple(i -> 1:last(CI.indices[i]), N))
+end
+
+_promote(CI) = CI
