@@ -98,4 +98,13 @@ using BenchmarkTools
   # vtk_grid("2d_fields", x, y) do vtk
   #   vtk["data", VTKCellData()] = data
   # end
+
+  tiles = tile(full, 2)
+  @test tile(full, (1, 2)) == tile(full, 2)
+  @test size(tiles) == (1, 2)
+
+  @test tiles[1] == CartesianIndices((1:10, 1:10))
+  @test tiles[2] == CartesianIndices((1:10, 11:20))
+
+  @test size(tile(CartesianIndices((40, 40, 40)), 3)) == (1, 1, 3)
 end
