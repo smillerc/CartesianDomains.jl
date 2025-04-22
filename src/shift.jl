@@ -37,7 +37,7 @@ end
 
 """
     shift(domain::CartesianIndices, axis::Int, n::Int)
-  
+
 Shift a `CartesianIndices` domain by `n` on a given `axis`
 """
 function shift(domain::CartesianIndices{N}, axis::Int, n::Int) where {N}
@@ -48,6 +48,21 @@ function shift(domain::CartesianIndices{N}, axis::Int, n::Int) where {N}
   idx = ntuple(j -> j == axis ? UnitRange(lo, hi) : dom.indices[j], N)
 
   return CartesianIndices(idx)
+end
+
+"""
+    shift(domain::CartesianIndices{N}, I::CartesianIndex{N}) where {N}
+
+Shift a `CartesianIndices` domain by a CartesianIndex `I`` of the same dimension
+"""
+function shift(domain::CartesianIndices{N}, I::CartesianIndex{N}) where {N}
+  shifted_domain = domain
+
+  for (axis, n) in enumerate(I.I)
+    shifted_domain = shift(shifted_domain, axis, n)
+  end
+
+  return shifted_domain
 end
 
 """

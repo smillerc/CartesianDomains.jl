@@ -12,8 +12,11 @@ function tile(
   domain::CartesianIndices{N}, fraction::NTuple{N,Int}; cell_based=true
 ) where {N}
   splits = cld.(size(domain), fraction)
-  tiles = collect(CartesianIndices.(product(partition.(axes(domain), splits)...)))
+  _tiles = collect(CartesianIndices.(product(partition.(axes(domain), splits)...)))
 
+  I0 = CartesianIndex(ntuple(i -> 1, N))
+  offset = first(domain) - I0
+  tiles = shift.(_tiles, offset)
   if cell_based
     return tiles
   else

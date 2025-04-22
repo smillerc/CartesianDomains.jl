@@ -2,7 +2,8 @@ using CartesianDomains
 using Test
 using BenchmarkTools
 
-@testset "CartesianDomains.jl" begin
+# @testset "CartesianDomains.jl"
+begin
   domain = CartesianIndices((1:10, 4:8))
 
   @test lower_boundary_indices(domain, 1, +1) == CartesianIndices((2:2, 4:8))
@@ -107,4 +108,15 @@ using BenchmarkTools
   @test tiles[2] == CartesianIndices((1:10, 11:20))
 
   @test size(tile(CartesianIndices((40, 40, 40)), 3)) == (1, 1, 3)
+
+  # test offset indices
+  offset_dom = CartesianIndices((5:55, 5:65))
+  I = CartesianIndex(2, 3)
+  @test shift(offset_dom, I) == CartesianIndices((7:57, 8:68))
+
+  offset_tiles = tile(offset_dom, 3)
+
+  offset_tiles[1] = CartesianIndices((5:55, 5:25))
+  offset_tiles[2] = CartesianIndices((5:55, 26:46))
+  offset_tiles[3] = CartesianIndices((5:55, 47:65))
 end
