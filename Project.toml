@@ -1,7 +1,7 @@
 name = "CartesianDomains"
 uuid = "31d3d393-e656-4614-8ab7-f376885a6db2"
 authors = ["Sam Miller <smil@lle.rochester.edu> and contributors"]
-version = "0.2.0"
+version = "0.2.1"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
